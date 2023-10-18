@@ -7,7 +7,7 @@
     "coverage": "hardhat coverage"
   },
   "dependencies": {
-    "@chainlink/contracts": "^0.8.0",
+    "@chainlink/contracts": "^0.4.0",
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
     "@nomicfoundation/hardhat-ethers": "^3.0.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
@@ -18,12 +18,14 @@
     "hardhat-gas-reporter": "^1.0.9",
     "readme-md-generator": "^1.0.0",
     "solhint": "^3.6.2",
-    "solidity-coverage": "^0.8.5"
+    "solidity-coverage": "^0.8.5",
+    "typechain": "^8.3.1"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers",
     "@typechain/ethers-v6": "^0.4.0",
     "@typechain/hardhat": "^8.0.0",
+    "@types/dotenv": "^8.2.0",
     "@types/mocha": ">=9.1.0",
     "@types/node": "^20.8.6",
     "chai": "^4.2.0",
