@@ -1,7 +1,8 @@
 import { DeployFunction } from 'hardhat-deploy/dist/types';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { network } from 'hardhat';
+import { network, ethers } from 'hardhat';
 import { developmentChains, networkConfig, VERIFICATION_BLOCK_CONFIRMATIONS } from '../config/network';
+import { verify } from "../utils/verify";
 
 const FUND_AMOUNT = '1000000000000000000000';
 const deployRaffle: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
@@ -14,11 +15,12 @@ const deployRaffle: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     let vrfCoordinatorV2Address: string | undefined, subscriptionId: string | undefined;
 
     if (chainId === 31337) {
-        const vrfCoordinatorV2Mock: any = await deployments.get('VRFCoordinatorV2Mock');
-        vrfCoordinatorV2Address = vrfCoordinatorV2Mock.address;
+        const vrfCoordinatorV2Mock: any = await ethers.getContract('VRFCoordinatorV2Mock');
+        vrfCoordinatorV2Address = vrfCoordinatorV2Mock.target;
         const transactionResponse = await vrfCoordinatorV2Mock.createSubscription();
         const transactionReceipt = await transactionResponse.wait();
-        subscriptionId = transactionReceipt.events[0].args.subId;
+        subscriptionId = "1";
+
         // Fund the subscription
         // Our mock makes it so we don't actually have to worry about sending fund
         await vrfCoordinatorV2Mock.fundSubscription(subscriptionId, FUND_AMOUNT);
@@ -45,17 +47,16 @@ const deployRaffle: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
         waitConfirmations: waitBlockConfirmations,
     });
 
-
     // Verify the deployment
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
-        log("Verifying...")
-        // await verify(raffle.address, args)
+        log('Verifying...');
+        await verify(raffle.address, args)
     }
 
-    log("Run Price Feed contract with command:")
-    const networkName = network.name == "hardhat" ? "localhost" : network.name
-    log(`yarn hardhat run scripts/enterRaffle.ts --network ${networkName}`)
-    log("----------------------------------------------------")
+    log('Run Price Feed contract with command:');
+    const networkName = network.name == 'hardhat' ? 'localhost' : network.name;
+    log(`yarn hardhat run scripts/enterRaffle.ts --network ${networkName}`);
+    log('----------------------------------------------------');
 };
 
 deployRaffle.tags = ['all', 'Raffle'];

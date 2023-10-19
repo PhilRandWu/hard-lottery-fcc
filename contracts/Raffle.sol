@@ -13,7 +13,7 @@ import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
     error Raffle__UpkeepNotNeeded(uint256, uint256, uint256);
 
 // 3. Interfaces, Libraries, Contracts
-abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
+contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     enum RaffleState {
         Open,
         CALCULATING
@@ -44,7 +44,7 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         uint64 subscriptionId,
         bytes32 gasLane, // keyHash
         uint32 callbackGasLimit
-    ) {
+    ) VRFConsumerBaseV2(vrfCoordinator)  {
         i_vrfCoordinator = VRFCoordinatorV2Interface(vrfCoordinator);
         i_entranceFee = entranceFee;
         i_interval = interval;

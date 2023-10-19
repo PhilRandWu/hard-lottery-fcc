@@ -1,12 +1,13 @@
 import { HardhatUserConfig } from 'hardhat/config';
 import '@nomicfoundation/hardhat-toolbox';
-import 'dotenv';
+import "dotenv/config"
 import '@nomicfoundation/hardhat-verify';
 import 'hardhat-gas-reporter';
 import 'solidity-coverage';
 import 'hardhat-deploy';
-import '@nomicfoundation/hardhat-ethers';
 import 'hardhat-deploy-ethers';
+import "@typechain/hardhat"
+import "@nomiclabs/hardhat-ethers"
 
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "";
 
