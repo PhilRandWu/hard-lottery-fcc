@@ -1,15 +1,15 @@
 import { HardhatUserConfig } from 'hardhat/config';
 import '@nomicfoundation/hardhat-toolbox';
-import "dotenv/config"
+import 'dotenv/config';
 import '@nomicfoundation/hardhat-verify';
 import 'hardhat-gas-reporter';
 import 'solidity-coverage';
 import 'hardhat-deploy';
 import 'hardhat-deploy-ethers';
-import "@typechain/hardhat"
-import "@nomiclabs/hardhat-ethers"
+import '@typechain/hardhat';
+import '@nomiclabs/hardhat-ethers';
 
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "";
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || '';
 
 const config: HardhatUserConfig = {
     solidity: {
@@ -34,11 +34,17 @@ const config: HardhatUserConfig = {
             default: 1,
         },
     },
+    gasReporter: {
+        enabled: true,
+        currency: 'USD',
+        outputFile: 'gas-report.txt',
+        noColors: true,
+    },
     etherscan: {
         apiKey: {
             sepolia: ETHERSCAN_API_KEY,
-        }
-    }
+        },
+    },
 };
 
 export default config;
